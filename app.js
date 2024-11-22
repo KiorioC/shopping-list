@@ -39,26 +39,31 @@ class Task {
         this.title = newTitle;
     }
 
-    render(){
+    render(index, totalTasks){
         return `
         <div data-task-id="${this.id}" class="task">
             <div class="title">
-                ${this.#isInEditing 
+                ${
+            this.#isInEditing
                 ? `<input id="input-${this.id}" data-task-id="${this.id}" type="text" value="${this.title}">`
-                : this.title}
+                : this.title
+        }
             </div>
             <div class="actions">
-                ${this.actions.map(action => action.render()).join("")}
+                ${this.actions
+            .map(action => {
+                if (action.className === "up" && index === 0) {
+                    return action.render({ disabled: true });
+                }
+                if (action.className === "down" && index === totalTasks - 1) {
+                    return action.render({ disabled: true });
+                }
+                return action.render({ disabled: false });
+            })
+            .join("")}
             </div>
         </div>
         `;
-    }
-
-    focusInput() {
-        if (this.#isInEditing) {
-            const inputElement = document.getElementById(`input-${this.id}`);
-            if (inputElement) inputElement.focus();
-        }
     }
 }
 
@@ -69,7 +74,7 @@ class Action {
         this.task = task;
     }
 
-    render() {
+    render({ disabled }) {
         return `
         <span class="${this.className.toLowerCase()}">
             <img
@@ -77,7 +82,7 @@ class Action {
                 data-task-id="${this.task.id}"
                 src="svg/${this.imageName.toLowerCase()}.svg"
                 alt="${this.imageName}"
-                style="width: 1rem; height: 1rem;"
+                style="width: 1rem; height: 1rem; ${disabled ? "filter: grayscale(100%); opacity: 0.5; cursor: not-allowed;" : ""}"
             />
         </span>
         `;
@@ -92,7 +97,9 @@ class TaskManager {
     }
 
     render() {
-        this.htmlElement.innerHTML = this.#tasks.map(task => task.render()).join("");
+        this.htmlElement.innerHTML = this.#tasks
+            .map((task, index) => task.render(index, this.#tasks.length))
+            .join("");
     }
 
     addTask(newTask) {
