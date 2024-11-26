@@ -1,7 +1,7 @@
 body {
     font-family: 'Fredoka One', Arial, sans-serif;
-    background-color: #383838;
-    color: #343a40;
+    background-color: #001523;
+    color: #001a28;
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,13 +10,68 @@ body {
     height: 100vh;
 }
 
+h1 {
+    color: white;
+}
+
+h1:before {
+    content: "";
+    position: absolute;
+    height: 0.15em;
+    width: 45%;
+    background: linear-gradient(
+    to right,
+    deeppink,
+    darkviolet,
+    blue
+    );
+    top: 3em;
+}
+
 .shopping-list-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    background-color: #012a46;
+    padding: 2em;
+    border-radius: 10px;
+    width: auto;
+    min-width: 400px;
+    text-align: left;
+    position: relative;
+}
+
+@property --angle {
+  syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.shopping-list-container:after, .shopping-list-container:before {
+    content: '';
+    position: absolute;
+    height: 100%;
     width: 100%;
-    max-width: 400px;
+    background-image: conic-gradient(from var(--angle) , deeppink, darkviolet, blue , deeppink);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    animation: spin 3s linear infinite;
+}
+
+.shopping-list-container:before {
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
 }
 
 .input-container {
@@ -26,9 +81,11 @@ body {
 }
 
 input[type="text"] {
+    background-color: #001a28;
+    color: white;
     flex: 1;
     padding: 10px;
-    border: 1px solid #6c757d;
+    border: 1px solid #012a46;
     border-radius: 4px;
 }
 
@@ -41,21 +98,25 @@ button {
 }
 
 #add {
-    background-color: #007bff;
+    background-color: #5b5b5b;
     color: white;
 }
 
 #add:hover {
-    background-color: #0056b3;
+    background-color: #00497a;
+    background-image: conic-gradient(from var(--angle) , blue, deepskyblue, blue);
+    animation: spin 3s linear infinite;
 }
 
 #reset {
-    background-color: #dc3545;
+    background-color: #5b5b5b;
     color: white;
 }
 
 #reset:hover {
     background-color: #c82333;
+    background-image: conic-gradient(from var(--angle) , red, darkred, red);
+    animation: spin 3s linear infinite;
 }
 
 .tasks {
@@ -64,13 +125,15 @@ button {
 }
 
 .task {
+    color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border: 1px solid #6c757d;
+    border: 1px solid #00497a;
     border-radius: 4px;
     margin-bottom: 10px;
+    background-color: #003154;
 }
 
 .title {
@@ -87,6 +150,8 @@ img[data-type="delete"] {
     border-radius: 4px;
     background-color: #f8d7da;
     padding: 4px;
+    background-image: conic-gradient(from var(--angle) , tomato, indianred, tomato);
+    animation: spin 3s linear infinite;
 }
 
 img[data-type="edit"] {
@@ -94,6 +159,8 @@ img[data-type="edit"] {
     border-radius: 4px;
     background-color: #d4edda;
     padding: 4px;
+    background-image: conic-gradient(from var(--angle) , greenyellow, lightgreen, greenyellow);
+    animation: spin 3s linear infinite;
 }
 
 img[data-type="up"] {
@@ -101,6 +168,9 @@ img[data-type="up"] {
     border-radius: 4px;
     background-color: #b9ddff;
     padding: 4px;
+    margin-left: 20px;
+    background-image: conic-gradient(from var(--angle) , #4effd6, #0080ab, #21fff4);
+    animation: spin 3s linear infinite;
 }
 
 img[data-type="down"] {
@@ -108,4 +178,6 @@ img[data-type="down"] {
     border-radius: 4px;
     background-color: #b9ddff;
     padding: 4px;
+    background-image: conic-gradient(from var(--angle) , #4effd6, #0080ab, #21fff4);
+    animation: spin 3s linear infinite;
 }
